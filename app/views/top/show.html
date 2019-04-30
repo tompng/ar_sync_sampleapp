@@ -1,0 +1,50 @@
+<script>
+  const currentUserQuery = {
+    name: true, followedCount: true, followingCount: true,
+    posts: ['id', 'title', 'commentsCount', 'createdAt']
+  }
+  const postsQuery = {
+    id: true,
+    user: ['id', 'name'],
+    title: true,
+    createdAt: true,
+    commentsCount: true
+  }
+
+  const currentUserModel = new ArSyncModel({ api: 'profile', query: currentUserQuery })
+  const postsModel = new ArSyncModel({ api: 'newposts', query: postsQuery })
+  ArSyncModel.waitForLoad(currentUserModel, postsModel).then(() => {
+    const data  = { currentUser: currentUserModel.data, newPosts: postsModel.data }
+    new Vue({ el: '#syncbody', data })
+  })
+</script>
+<div id='syncbody' v-cloak>
+  <h1>Top Page: welcome {{ currentUser.name }}!</h1>
+  <h2>
+    Following: {{ currentUser.followingCount }}
+    &nbsp;&nbsp;
+    Followers: {{ currentUser.followedCount }}
+    &nbsp;&nbsp;
+    <a href='/follows'>detail</a>
+  </h2>
+  <hr>
+  <a href='/posts/new'>Create New Post</a>
+  &nbsp;
+  <a href='/users'>Find friends</a>
+  <hr>
+  <h2>Your posts</h2>
+  <div v-for='post in currentUser.posts'>
+    <a :href="'/posts/' + post.id"><b>{{ post.title }}</b></a>
+    &nbsp;&nbsp;
+    <small>date: {{ post.createdAt }}</small>
+    <small>&nbsp;&nbsp;comments: {{ post.commentsCount }}</small>
+  </div>
+  <h2>Everyone's posts</h2>
+  <div v-for='post in newPosts'>
+    <a :href='"/posts/"+post.id'><b>{{ post.title }}</b></a>
+    &nbsp;&nbsp;
+    <small>author: <a :href="'/users/' + post.user.id">{{ post.user.name }}</a></small>
+    <small>date: {{ post.createdAt }}</small>
+    <small>&nbsp;&nbsp;comments: {{ post.commentsCount }}</small>
+  </div>
+</div>

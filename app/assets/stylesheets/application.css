@@ -14,7 +14,7 @@
  *= require_self
  */
 
-
+[v-cloak] { display: none; }
 a { cursor: pointer; }
 .reaction-button { color: #eee; text-decoration: none; }
 .reaction-button.active { color: blue; }

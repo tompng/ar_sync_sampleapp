@@ -1,0 +1,24 @@
+<script>
+  const currentUserQuery = {
+    name: true,
+    followeds: { from: ['id', 'name'] },
+    followings: { to: ['id', 'name'] }
+  }
+  const currentUserModel = new ArSyncModel({
+    api: 'profile',
+    query: currentUserQuery
+  })
+  currentUserModel.onload(() => {
+    new Vue({ el: '#syncbody', data: { currentUser: currentUserModel.data } })
+  })
+</script>
+<div id='syncbody' v-cloak>
+  <h1>Following: {{ currentUser.followings.length }}</h1>
+  <div v-for='following in currentUser.followings'>
+    <a :href="'/users/' + following.to.id">{{ following.to.name }}</a>
+  </div>
+  <h1>Followers: {{ currentUser.followeds.length }}</h1>
+  <div v-for='followed in currentUser.followeds'>
+    <a :href="'/users/' + followed.from.id">{{ followed.from.name }}</a>
+  </div>
+</div>

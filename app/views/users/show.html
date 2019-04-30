@@ -1,0 +1,48 @@
+<script>
+  const currentUserQuery = ['id', 'name']
+  const userQuery = {
+    id: true, name: true, isFollowing: true, isFollowed: true,
+    posts: {
+      id: true, title: true, commentsCount: true, createdAt: true,
+      commentsLast5: { as: 'recentComments', attributes: { id: true, user: ['id', 'name'], body: true }, params: { limit: 3 } },
+    }
+  }
+  const currentUserModel = new ArSyncModel({ api: 'profile', query: currentUserQuery })
+  const userModel = new ArSyncModel({
+    api: 'user',
+    params: { id: location.pathname.match(/\d+/)[0] },
+    query: userQuery
+  })
+  ArSyncModel.waitForLoad(currentUserModel, userModel).then(() => {
+    new Vue({ el: '#syncbody', data: { currentUser: currentUserModel.data, user: userModel.data } })
+  })
+</script>
+<div id='syncbody' v-cloak>
+  <h1>
+    {{ user.name }}
+    &nbsp;&nbsp;
+    <small v-if='user.isFollowed'>follows you</small>
+    <small v-if='user.id == currentUser.id'>It's me</small>
+  </h1>
+  <span v-if='user.id != currentUser.id'>
+    <span v-if='user.isFollowing'>
+      following&nbsp;&nbsp;
+      <a class='button' :href="'/follows/unfollow?user_id=' + user.id" data-remote=true data-method='post'>unfollow</a>
+    </span>
+    <span v-else>
+      <a class='button' :href="'/follows/follow?user_id=' + user.id" data-remote=true data-method='post'>follow</a>
+    </span>
+  </span>
+  <h2>{{ user.name }}'s posts</h2>
+  <div v-for='post in user.posts'>
+    <a :href="'/posts/' + post.id"><b>{{ post.title }}</b></a>
+    &nbsp;&nbsp;
+    <small>date: {{ post.createdAt }}</small>
+    <small>&nbsp;&nbsp;comments:{{ post.commentsCount }}</small>
+    <div>recent 3 comments:</div>
+    <div v-for='comment in post.recentComments' style='padding-left:40px'>
+      <b>{{ comment.user.name }}:</b>
+      {{ comment.body }}
+    </div>
+  </div>
+</div>
