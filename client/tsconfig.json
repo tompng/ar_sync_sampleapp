@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "sourceMap": true,
+    "module": "es2015",
+    "target": "es5",
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  }
+}
