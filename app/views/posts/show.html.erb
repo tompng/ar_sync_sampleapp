@@ -1,0 +1,55 @@
+<h1>
+  <%= @post.title %>
+  &nbsp;
+  <% if @post.user == current_user %>
+    <% link_to edit_post_path(@post) do %>
+      <i class='material-icons'>edit</i>
+    <% end %>
+  <% end %>
+</h1>
+<p>
+  <b>
+    author: <%= link_to @post.user.name, @post.user %>
+    &nbsp;&nbsp;date: <%= @post.created_at %>
+  </b>
+</p>
+<article>
+  <%= @post.body %>
+</article>
+<%= render 'reactions/buttons', target: @post %>
+<hr>
+<div style='margin-left: 50px'>
+  <% @post.comments.each do |comment| %>
+    <p>
+      <b>
+        <%= link_to comment.user.name, comment.user %>
+        :&nbsp;
+      </b>
+      <span><%= comment.body %></span>
+      &nbsp;
+      <%= link_to comment do %>
+        <i class='material-icons'>link</i>
+      <% end %>
+      <% if comment.user == current_user %>
+        &nbsp;
+        <%= link_to comment_path(comment, format: :json), remote: true, method: :delete do %>
+          <i class='material-icons'>clear</i>
+        <% end %>
+        &nbsp;
+        <%= link_to edit_comment_path(comment) do %>
+          <i class='material-icons'>edit</i>
+        <% end %>
+      <% end %>
+    </p>
+    <%= render 'reactions/buttons', target: comment %>
+    <hr>
+  <% end %>
+</div>
+
+
+
+<%= form_for Comment.new, class: 'comment-form', remote: true do |f| %>
+  <%= hidden_field_tag :post_id, @post.id %>
+  <%= f.text_field :body, placeholder: :body %>
+  <button type=submit style='border: none; padding: 0; font-size: 1em;'><i class='material-icons'>send</i></button>
+<% end %>

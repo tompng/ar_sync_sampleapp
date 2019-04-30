@@ -4,12 +4,26 @@
     <title>Sampleapp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_link_tag 'https://fonts.googleapis.com/icon?family=Material+Icons' %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <% if user_signed_in? %>
+      <div class='header'>
+        <a class='header-item' href='/'><i class='material-icons'>apps</i></a>
+        <div class='header-right'>
+          <div class='header-item header-item-current-user'>
+            <i class='material-icons'>person_pin</i>
+            <%= current_user.name %>
+          </div>
+          <a class='header-item' href='/user/sign_out'>
+            <i class='material-icons'>exit_to_app</i>
+          </a>
+        </div>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

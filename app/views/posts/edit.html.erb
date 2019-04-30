@@ -1,0 +1,12 @@
+<h1>
+  <%= link_to @post do %>
+    <i class='material-icons'>reply</i>
+  <% end %>
+  &nbsp;
+  Edit post
+  &nbsp;
+  <%= link_to @post, method: :delete, data: { confirm: 'do you want to delete?' } do %>
+    <i class='material-icons'>delete</i>
+  <% end %>
+</h1>
+<%= render 'form' %>

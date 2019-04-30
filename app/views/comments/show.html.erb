@@ -1,0 +1,16 @@
+<%= link_to @comment.post do %>
+  <i class='material-icons'>reply</i>
+  Back
+<% end %>
+<div>
+  <b><%= link_to @comment.user.name, @comment.user %>:</b>
+  <span><%= @comment.body %></span>
+  &nbsp;
+  <% if @comment.user == current_user %>
+    <%= link_to edit_comment_path(@comment) do %>
+      <i class='material-icons'>edit</i>
+    <% end %>
+  <% end %>
+</div>
+<%= render 'reactions/buttons', target: @comment %>
+<hr>

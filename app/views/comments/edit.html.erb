@@ -1,0 +1,12 @@
+<h1>
+  <%= link_to @comment do %>
+    <i class='material-icons'>reply</i>
+  <% end %>
+  &nbsp;
+  Edit comment
+  &nbsp;
+  <%= link_to @comment, method: :delete, data: { confirm: 'do you want to delete?' } do %>
+    <i class='material-icons'>delete</i>
+  <% end %>
+</h1>
+<%= render 'form' %>

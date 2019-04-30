@@ -1,0 +1,19 @@
+<% reaction = target.reactions.find_by user: current_user %>
+<div>
+  <% { like: :thumb_up, dislike: :thumb_down }.each do |kind, icon| %>
+    <% selected = reaction&.kind == kind.to_s %>
+    <%= link_to "/#{target.class.table_name}/#{target.id}/reaction?kind=#{selected ? 'null' : kind}", method: :post, remote: true, class: "reaction-button #{'active' if selected}" do %>
+      <i class='material-icons <%= 'material-icons-large' if target.class == Post %>'><%= icon %></i>
+    <% end %>
+  <% end %>
+  <small>
+    <% likes = target.reactions.where(kind: :like).count %>
+    <% dislikes = target.reactions.where(kind: :dislike).count %>
+    <% if likes > 0 %>
+      <i class='material-icons'>thumb_up</i>:<%= likes %>
+    <% end %>
+    <% if dislikes > 0 %>
+      <i class='material-icons'>thumb_up</i>:<%= dislikes %>
+    <% end %>
+  </small>
+</div>

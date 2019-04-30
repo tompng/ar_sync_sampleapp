@@ -1,0 +1,32 @@
+<h1>Top Page: welcome <%= current_user.name %>!</h1>
+<h2>
+  Following: <%= current_user.followings.count %>
+  &nbsp;&nbsp;
+  Followers: <%= current_user.followeds.count %>
+  &nbsp;&nbsp;
+  <a href='/follows'>detail</a>
+</h2>
+<hr>
+<a href='/posts/new'>Create New Post</a>
+&nbsp;
+<a href='/users'>Find friends</a>
+<hr>
+<h2>Your posts</h2>
+<% current_user.posts.order(id: :desc).limit(10).each do |post| %>
+  <div>
+    <%= link_to post do %><b><%= post.title %></b><% end %>
+    &nbsp;&nbsp;
+    <small>date: <%= post.created_at %></small>
+    <small>&nbsp;&nbsp;comments:<%= post.comments.count %></small>
+  </div>
+<% end %>
+<h2>Everyone's posts</h2>
+<% Post.all.order(id: :desc).limit(10).each do |post| %>
+  <div>
+    <%= link_to post do %><b><%= post.title %></b><% end %>
+    &nbsp;&nbsp;
+    <small>author: <%= link_to post.user.name, post.user %></small>
+    <small>date: <%= post.created_at %></small>
+    <small>&nbsp;&nbsp;comments:<%= post.comments.count %></small>
+  </div>
+<% end %>

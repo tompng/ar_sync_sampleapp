@@ -1,0 +1,34 @@
+<h1>
+  <%= @user.name %>
+  &nbsp;&nbsp;
+  <small>
+    <%= 'follows you' if @user.followings.exists? to: current_user %>
+    <%= "It's me" if @user == current_user %>
+  </small>
+</h1>
+<% if @user != current_user %>
+  <% if @user.followeds.exists? from: current_user %>
+    following&nbsp;&nbsp;
+    <a class='button' href='/follows/unfollow?user_id=<%= @user.id %>' data-remote=true data-method='post'>unfollow</a>
+  <% else %>
+    <a class='button' href='/follows/follow?user_id=<%= @user.id %>' data-remote=true data-method='post'>follow</a>
+  <% end %>
+<% end %>
+<h2><%= @user.name %>'s posts</h2>
+<% @user.posts.each do |post| %>
+  <div>
+    <%= link_to post do %>
+      <b><%= post.title %></b>
+    <% end %>
+    &nbsp;&nbsp;
+    <small>date: <%= post.created_at %></small>
+    <small>&nbsp;&nbsp;comments:<%= post.comments.count %></small>
+    <div>recent 3 comments:</div>
+    <% post.comments.order(id: :desc).limit(3).each do |comment| %>
+      <div style='padding-left:40px'>
+        <b><%= comment.user.name %></b>
+        <%= comment.body %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
