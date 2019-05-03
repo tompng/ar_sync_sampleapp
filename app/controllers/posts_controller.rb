@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def show
-    @post = Post.find params[:id]
+    render html: '', layout: true
   end
 
   def new

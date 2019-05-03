@@ -6,7 +6,7 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'https://fonts.googleapis.com/icon?family=Material+Icons' %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag "/bundle.js?#{File.mtime(Rails.root.join('public/bundle.js')).to_i}" %>
   </head>
 
   <body>
@@ -25,5 +25,6 @@
       </div>
     <% end %>
     <%= yield %>
+    <div id='root'></div>
   </body>
 </html>

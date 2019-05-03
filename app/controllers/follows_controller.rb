@@ -1,5 +1,7 @@
 class FollowsController < ApplicationController
-  def index; end
+  def index
+    render html: '', layout: true
+  end
 
   def follow
     current_user.followings.where(to: User.find(params[:user_id])).first_or_create!

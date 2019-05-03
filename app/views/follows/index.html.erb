@@ -1,8 +1,0 @@
-<h1>Following: <%= current_user.followings.count %></h1>
-<% current_user.followings.each do |following| %>
-  <div><%= link_to following.to.name, following.to %></div>
-<% end %>
-<h1>Followers: <%= current_user.followeds.count %></h1>
-<% current_user.followeds.each do |followed| %>
-  <div><%= link_to followed.from.name, followed.from %></div>
-<% end %>
