@@ -1,24 +1,16 @@
-# README
+# SampleApp for `gem ar_sync`
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```shell
+bundle install; rails db:migrate db:seed
+cd client; npm install; npm run build; cd ..
+rails s
+```
 
-Things you may want to cover:
+## About gem ar_sync
+see [tompng/ar_sync](https://github.com/tompng/ar_sync)
 
-* Ruby version
+## TypeScript & React
+see [branch:master](https://github.com/tompng/ar_sync_sampleapp/commits/master)
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Sprockets & Vue
+see [branch:sprockets_vue](https://github.com/tompng/ar_sync_sampleapp/commits/sprockets_vue)
