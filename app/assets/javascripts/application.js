@@ -12,4 +12,8 @@
 //
 //= require rails-ujs
 //= require activestorage
+//= require ar_sync_graph
+//= require action_cable
+//= require ar_sync_actioncable_adapter
+ArSyncModel.setConnectionAdapter(new ArSyncActionCableAdapter())
 //= require_tree .
