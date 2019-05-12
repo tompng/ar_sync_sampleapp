@@ -44,6 +44,12 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
+    ar_serializer (1.0.0)
+      activerecord
+      top_n_loader
+    ar_sync (1.0.1)
+      activerecord
+      ar_serializer
     archive-zip (0.12.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
@@ -172,6 +178,8 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.9)
+    top_n_loader (1.0.0)
+      activerecord
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.20)
@@ -191,6 +199,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ar_sync
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15)
